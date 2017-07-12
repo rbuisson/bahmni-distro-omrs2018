@@ -55,7 +55,7 @@
     <uicommonsVersion>1.10-SNAPSHOT</uicommonsVersion>
     <uiframeworkVersion>3.8</uiframeworkVersion>
     <uilibraryVersion>2.0.5-SNAPSHOT</uilibraryVersion>
-    <webservices.restVersion>2.17</webservices.restVersion>
+    <webservices.restVersion>2.20-SNAPSHOT</webservices.restVersion>
 
     <bahmnicoreVersion>0.89-SNAPSHOT</bahmnicoreVersion>
     <bahmniieomodVersion>0.89-SNAPSHOT</bahmniieomodVersion>
