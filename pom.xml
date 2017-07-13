@@ -28,12 +28,15 @@
 
     <openMRSVersion>2.1.0</openMRSVersion>
 
-    <openmrsconfigVersion>1.0-SNAPSHOT</openmrsconfigVersion>
-    <bahmniconfigRevision>dev</bahmniconfigRevision>
     <bahmniappsRevision>dev</bahmniappsRevision>
+
+    <openmrsconfigVersion>1.0-SNAPSHOT</openmrsconfigVersion>
+    <bahmniconfigVersion>1.0-SNAPSHOT</bahmniconfigVersion>
     <addresshierarchyVersion>2.11.0-SNAPSHOT</addresshierarchyVersion>
     <initializerVersion>1.0-SNAPSHOT</initializerVersion>
     <exti18nVersion>1.0-SNAPSHOT</exti18nVersion>
+    <webservices.restVersion>2.20.0-SNAPSHOT</webservices.restVersion>
+    <bahmnicoreVersion>0.89-SNAPSHOT</bahmnicoreVersion>
 
     <appframeworkVersion>2.10-SNAPSHOT</appframeworkVersion>
     <atomfeedVersion>2.5.5-SNAPSHOT</atomfeedVersion>
@@ -55,9 +58,7 @@
     <uicommonsVersion>1.10-SNAPSHOT</uicommonsVersion>
     <uiframeworkVersion>3.8</uiframeworkVersion>
     <uilibraryVersion>2.0.5-SNAPSHOT</uilibraryVersion>
-    <webservices.restVersion>2.20-SNAPSHOT</webservices.restVersion>
-
-    <bahmnicoreVersion>0.89-SNAPSHOT</bahmnicoreVersion>
+    
     <bahmniieomodVersion>0.89-SNAPSHOT</bahmniieomodVersion>
     <rulesengineVersion>0.89-SNAPSHOT</rulesengineVersion>
   </properties>
@@ -68,6 +69,12 @@
       <artifactId>openmrs-config-cambodia</artifactId>
       <type>zip</type>
       <version>${openmrsconfigVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.mekomsolutions</groupId>
+      <artifactId>bahmni-config-cambodia</artifactId>
+      <type>zip</type>
+      <version>${bahmniconfigVersion}</version>
     </dependency>
     <dependency>
       <groupId>org.openmrs.web</groupId>
@@ -225,23 +232,12 @@
 
   <build>
     <plugins>
-      <!-- Bahmni config and Bahmni Apps -->
+      <!-- Bahmni Apps -->
       <plugin>
         <groupId>com.googlecode.maven-download-plugin</groupId>
         <artifactId>download-maven-plugin</artifactId>
         <version>1.3.0</version>
         <executions>
-          <execution>
-            <id>wget-bahmniconfig</id>
-            <phase>package</phase>
-            <goals>
-              <goal>wget</goal>
-            </goals>
-            <configuration>
-              <url>https://ci.mekomsolutions.net/job/Repo_Configs/ws/cambodia/bahmni/${bahmniconfigRevision}/config.zip</url>
-              <outputDirectory>${distro.bahmniconfigDir}</outputDirectory>
-            </configuration>
-          </execution>
           <execution>
             <id>wget-bahmniapps</id>
             <phase>package</phase>
@@ -256,12 +252,12 @@
         </executions>
       </plugin>
 
-      <!-- OpenMRS modules -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <version>2.8</version>
         <executions>
+          <!-- OpenMRS Core -->
           <execution>
             <id>copy-war</id>
             <phase>package</phase>
@@ -275,6 +271,7 @@
               <excludeTypes>jar, zip</excludeTypes> <!-- copying war only -->
             </configuration>
           </execution>
+          <!-- OpenMRS modules -->
           <execution>
             <id>copy-jars</id>
             <phase>package</phase>
@@ -288,6 +285,7 @@
               <excludeTypes>war, zip</excludeTypes> <!-- copying jars only -->
             </configuration>
           </execution>
+          <!-- OpenMRS config -->
           <execution>
             <id>copy-openmrs-config</id>
             <phase>package</phase>
@@ -299,6 +297,20 @@
               <useBaseVersion>true</useBaseVersion>
               <outputDirectory>${distro.openmrsconfigDir}</outputDirectory>
               <includeArtifactIds>openmrs-config-cambodia</includeArtifactIds>
+            </configuration>
+          </execution>
+          <!-- Bahmni config -->
+          <execution>
+            <id>copy-bahmni-config</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <excludeTransitive>true</excludeTransitive>
+              <useBaseVersion>true</useBaseVersion>
+              <outputDirectory>${distro.bahmniconfigDir}</outputDirectory>
+              <includeArtifactIds>bahmni-config-cambodia</includeArtifactIds>
             </configuration>
           </execution>
         </executions>
@@ -338,6 +350,21 @@
               <goal>run</goal>
             </goals>
           </execution>
+          <execution>
+            <id>rename-bahmni-config</id>
+            <phase>package</phase>
+            <configuration>
+              <target>
+                <move todir="${distro.bahmniconfigDir}">
+                  <fileset dir="${distro.bahmniconfigDir}" />
+                  <mapper type="regexp" from="^bahmni-config-cambodia(.+)\.zip" to="config.zip" />
+                </move>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
         </executions>
       </plugin>
 
@@ -348,20 +375,24 @@
     <repository>
       <id>mks-nexus-public</id>
       <url>https://nexus.mekomsolutions.net/repository/maven-public/</url>
+      <snapshots>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
     </repository>
     <repository>
-      <id>rubygems-proxy</id>
-      <name>Rubygems Proxy</name>
-      <url>http://rubygems-proxy.torquebox.org/releases</url>
-      <layout>default</layout>
-      <releases>
-        <enabled>true</enabled>
-        <updatePolicy>interval:10080</updatePolicy>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-        <updatePolicy>never</updatePolicy>
-      </snapshots>
+      <id>openmrs-repo</id>
+      <name>OpenMRS Nexus Repository</name>
+      <url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
+    </repository>
+    <repository>
+      <id>repo.mybahmni.org</id>
+      <name>bahmni-artifactory-snapshots</name>
+      <url>http://repo.mybahmni.org.s3.amazonaws.com/artifactory/snapshot</url>
+    </repository>
+    <repository>
+      <id>repo.mybahmni.org-release</id>
+      <name>bahmni-artifactory-release</name>
+      <url>http://repo.mybahmni.org.s3.amazonaws.com/artifactory/release</url>
     </repository>
     <repository>
       <id>sonatype-nexus-snapshots</id>
@@ -374,73 +405,6 @@
         <enabled>true</enabled>
         <updatePolicy>interval:10080</updatePolicy>
       </snapshots>
-    </repository>
-    <repository>
-      <id>central</id>
-      <url>http://repo1.maven.org/maven2</url>
-      <name>Repository for dependencies</name>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>interval:10080</updatePolicy>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>spring-maven-release</id>
-      <name>Spring Maven Release Repository</name>
-      <url>http://maven.springframework.org/release</url>
-      <releases>
-        <updatePolicy>interval:10080</updatePolicy>
-      </releases>
-    </repository>
-    <repository>
-      <id>apache-maven-release</id>
-      <name>Apache Maven Release Repository</name>
-      <url>https://repository.apache.org/content/repositories/releases</url>
-      <releases>
-        <updatePolicy>interval:10080</updatePolicy>
-      </releases>
-    </repository>
-    <repository>
-      <id>JBoss</id>
-      <name>The "public-jboss" repository group provides a combined view all JBoss community project artifacts
-      </name>
-      <layout>default</layout>
-      <url>http://repository.jboss.org/nexus/content/groups/public-jboss</url>
-      <releases>
-        <updatePolicy>interval:10080</updatePolicy>
-      </releases>
-    </repository>
-    <repository>
-      <id>spring-repo</id>
-      <name>Spring Maven Repository</name>
-      <url>http://maven.springframework.org/milestone</url>
-      <releases>
-        <updatePolicy>interval:10080</updatePolicy>
-      </releases>
-      <snapshots>
-        <updatePolicy>interval:10080</updatePolicy>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>openmrs-repo</id>
-      <name>OpenMRS Nexus Repository</name>
-      <url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
-      <releases>
-        <updatePolicy>interval:10080</updatePolicy>
-      </releases>
-    </repository>
-    <repository>
-      <id>repo.mybahmni.org</id>
-      <name>bahmni-artifactory-snapshots</name>
-      <url>http://repo.mybahmni.org.s3.amazonaws.com/artifactory/snapshot</url>
-      <snapshots>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>repo.mybahmni.org-release</id>
-      <name>bahmni-artifactory-release</name>
-      <url>http://repo.mybahmni.org.s3.amazonaws.com/artifactory/release</url>
     </repository>
   </repositories>
 
