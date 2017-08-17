@@ -39,7 +39,6 @@
     <!-- In dev -->
     <addresshierarchyVersion>2.11.0-SNAPSHOT</addresshierarchyVersion>
     <initializerVersion>1.0-SNAPSHOT</initializerVersion>
-    <exti18nVersion>1.0-SNAPSHOT</exti18nVersion>
     <webservices.restVersion>2.20.0-SNAPSHOT</webservices.restVersion>
     <bahmnicoreVersion>0.89-SNAPSHOT</bahmnicoreVersion>
 
@@ -53,6 +52,7 @@
     <bedmanagementVersion>5.6-SNAPSHOT</bedmanagementVersion>
 
     <!-- OpenMRS modules -->
+    <exti18nVersion>1.0.0</exti18nVersion>
     <appframeworkVersion>2.10.0</appframeworkVersion>
     <calculationVersion>1.2</calculationVersion>
     <emrapiVersion>1.22.1</emrapiVersion>
@@ -270,7 +270,7 @@
               <excludeTransitive>true</excludeTransitive>
               <useBaseVersion>true</useBaseVersion>
               <outputDirectory>${distro.warDir}</outputDirectory>
-              <excludeTypes>jar, zip</excludeTypes> <!-- copying war only -->
+              <includeTypes>war</includeTypes>
             </configuration>
           </execution>
           <!-- OpenMRS modules -->
@@ -284,7 +284,7 @@
               <excludeTransitive>true</excludeTransitive>
               <useBaseVersion>true</useBaseVersion>
               <outputDirectory>${distro.modulesDir}</outputDirectory>
-              <excludeTypes>war, zip</excludeTypes> <!-- copying jars only -->
+              <includeTypes>jar, omod</includeTypes> <!-- copying jars and omods only -->
             </configuration>
           </execution>
           <!-- OpenMRS config -->
