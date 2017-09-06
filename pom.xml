@@ -38,7 +38,7 @@
     
     <!-- In dev -->
     <addresshierarchyVersion>2.11.0-SNAPSHOT</addresshierarchyVersion>
-    <initializerVersion>1.0-SNAPSHOT</initializerVersion>
+    <initializerVersion>1.0.1-SNAPSHOT</initializerVersion>
     <webservices.restVersion>2.20.0-SNAPSHOT</webservices.restVersion>
     <bahmnicoreVersion>0.89-SNAPSHOT</bahmnicoreVersion>
     <reportingVersion>1.14.0-SNAPSHOT</reportingVersion>
