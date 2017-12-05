@@ -34,7 +34,7 @@
     <bahmniconfigVersion>1.0-SNAPSHOT</bahmniconfigVersion>
 
     <!-- Bahmni Apps -->
-    <bahmniappsRevision>BAH-376_master</bahmniappsRevision>
+    <bahmniappsRevision>dev</bahmniappsRevision>
     
     <!-- In dev -->
     <addresshierarchyVersion>2.11.0-SNAPSHOT</addresshierarchyVersion>
@@ -72,12 +72,6 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>net.mekomsolutions</groupId>
-      <artifactId>bahmniapps</artifactId>
-      <type>zip</type>
-      <version>${bahmniappsRevision}</version>
-    </dependency>
     <dependency>
       <groupId>net.mekomsolutions</groupId>
       <artifactId>openmrs-config-cambodia</artifactId>
@@ -247,7 +241,6 @@
   <build>
     <plugins>
       <!-- Bahmni Apps -->
-      <!--
       <plugin>
         <groupId>com.googlecode.maven-download-plugin</groupId>
         <artifactId>download-maven-plugin</artifactId>
@@ -266,7 +259,7 @@
           </execution>
         </executions>
       </plugin>
-      -->
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -298,20 +291,6 @@
               <useBaseVersion>true</useBaseVersion>
               <outputDirectory>${distro.modulesDir}</outputDirectory>
               <includeTypes>jar, omod</includeTypes> <!-- copying jars and omods only -->
-            </configuration>
-          </execution>
-          <!-- Bahmni Apps -->
-           <execution>
-            <id>copy-bahmniapps</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <excludeTransitive>true</excludeTransitive>
-              <useBaseVersion>true</useBaseVersion>
-              <outputDirectory>${distro.bahmniappsDir}</outputDirectory>
-              <includeArtifactIds>bahmniapps</includeArtifactIds>
             </configuration>
           </execution>
           <!-- OpenMRS config -->
