@@ -88,6 +88,12 @@
       <type>zip</type>
       <version>${bahmniconfigVersion}</version>
     </dependency>
+     <dependency>
+      <groupId>net.mekomsolutions</groupId>
+      <artifactId>bahmniapps</artifactId>
+      <type>zip</type>
+      <version>${bahmniappsRevision}</version>
+    </dependency>
     <dependency>
       <groupId>org.openmrs.web</groupId>
       <artifactId>openmrs-webapp</artifactId>
@@ -259,25 +265,6 @@
 
   <build>
     <plugins>
-      <!-- Bahmni Apps -->
-      <plugin>
-        <groupId>com.googlecode.maven-download-plugin</groupId>
-        <artifactId>download-maven-plugin</artifactId>
-        <version>1.3.0</version>
-        <executions>
-          <execution>
-            <id>wget-bahmniapps</id>
-            <phase>package</phase>
-            <goals>
-              <goal>wget</goal>
-            </goals>
-            <configuration>
-              <url>https://ci.mekomsolutions.net/job/Repo_Bahmni_Apps/ws/${bahmniappsRevision}/bahmniapps.zip</url>
-              <outputDirectory>${distro.bahmniappsDir}</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -337,6 +324,20 @@
               <useBaseVersion>true</useBaseVersion>
               <outputDirectory>${distro.bahmniconfigDir}</outputDirectory>
               <includeArtifactIds>bahmni-config-cambodia</includeArtifactIds>
+            </configuration>
+          </execution>
+          <!-- Bahmni Apps -->
+          <execution>
+            <id>copy-bahmniapps</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <excludeTransitive>true</excludeTransitive>
+              <useBaseVersion>true</useBaseVersion>
+              <outputDirectory>${distro.bahmniappsDir}</outputDirectory>
+              <includeArtifactIds>bahmniapps</includeArtifactIds>
             </configuration>
           </execution>
         </executions>
