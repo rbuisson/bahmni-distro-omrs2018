@@ -400,7 +400,7 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <executions>
           <execution>
-            <id>create-distribution</id>
+            <id>package-distro-artifact</id>
             <phase>package</phase>
             <goals>
               <goal>single</goal>
