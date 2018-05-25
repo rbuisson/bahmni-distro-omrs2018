@@ -64,7 +64,7 @@
     <legacyuiVersion>1.3.3</legacyuiVersion>
     <metadatamappingVersion>1.3.1</metadatamappingVersion>
     <metadatasharingVersion>1.2.2</metadatasharingVersion>
-    <mksreportsVersion>1.1.1</mksreportsVersion>
+    <mksreportsVersion>1.1.2-SNAPSHOT</mksreportsVersion>
     <providermanagementVersion>2.5.0</providermanagementVersion>
     <reportingVersion>1.15.0</reportingVersion>
     <serializationVersion>0.2.12</serializationVersion>
