@@ -3,7 +3,7 @@
   <groupId>net.mekomsolutions</groupId>
   <artifactId>openmrs-distro-cambodia</artifactId>
   <name>OpenMRS distribution for Cambodia</name>
-  <version>1.1.6-SNAPSHOT</version>
+  <version>1.1.6</version>
   <packaging>pom</packaging>
 
   <developers>
@@ -29,8 +29,8 @@
     <openMRSVersion>2.1.1</openMRSVersion>
     
     <!-- Configs -->
-    <openmrsconfigVersion>1.0.8</openmrsconfigVersion>
-    <bahmniconfigVersion>1.0.7</bahmniconfigVersion>
+    <openmrsconfigVersion>1.0.9</openmrsconfigVersion>
+    <bahmniconfigVersion>1.0.8</bahmniconfigVersion>
 
     <!-- Bahmni Apps -->
     <bahmniappsRevision>a63f511</bahmniappsRevision>
@@ -41,7 +41,7 @@
     <!-- Bahmni modules -->
     <bahmnicoreVersion>0.90.1</bahmnicoreVersion>
     <bahmniieomodVersion>0.90-SNAPSHOT</bahmniieomodVersion>
-    <bahmniOfflineSyncVersion>0.90.1</bahmniOfflineSyncVersion>
+    <bahmniOfflineSyncVersion>0.90.2</bahmniOfflineSyncVersion>
     <rulesengineVersion>0.90-SNAPSHOT</rulesengineVersion>
     <idgenwebservicesVersion>1.2-SNAPSHOT</idgenwebservicesVersion>
     <episodesVersion>1.0-SNAPSHOT</episodesVersion>
