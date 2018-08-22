@@ -23,6 +23,9 @@ The target version of OpenMRS Core.
 
 ---
 
+# Demo
+http://www.mekomsolutions.com/cambodiademo
+
 # Background
 http://www.mekomsolutions.com/news/#news_14-02-2017
 >The aim of the _OpenMRS distribution for Cambodia_ is to be ready-to-use for Cambodian primary care facilities and to support standard terminology, standard code sets and standard work processes as well as adequate reporting analytics.
